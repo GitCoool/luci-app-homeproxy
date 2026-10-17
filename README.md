@@ -1,5 +1,9 @@
 # luci-app-homeproxy
 
+相较于原作者（XiaoHaiSly）版本，修改了订阅获取方式。订阅报错的朋友，可以试试这个版本。
+
+
+
 基于 [homeproxy](https://github.com/immortalwrt/homeproxy) 修改的 OpenWrt 代理客户端，以 [sing-box](https://github.com/shtorm-7/sing-box-extended) 为核心，提供 LuCI 管理界面。
 
 本仓库包含两个软件包：
