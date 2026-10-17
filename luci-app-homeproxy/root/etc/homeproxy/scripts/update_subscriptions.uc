@@ -10,7 +10,7 @@ import { cursor } from 'uci';
 import { urldecode, urlencode } from 'luci.http';
 
 import {
-	curlGET, decodeBase64Str, getTime, isEmpty, parseURL,
+	wGET, decodeBase64Str, getTime, isEmpty, parseURL,
 	validation, HP_DIR, RUN_DIR,
 	reconcileUrltestNodes, synchronizeNodeLabels
 } from 'homeproxy';
@@ -1132,7 +1132,7 @@ function main() {
 		const groupHash = md5(url);
 		node_cache[groupHash] = {};
 
-		const res = curlGET(url, user_agent);
+		const res = wGET(url, user_agent);
 		if (isEmpty(res)) {
 			log(sprintf('Failed to fetch resources from %s.', url));
 			continue;
