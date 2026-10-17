@@ -56,44 +56,15 @@ export function getTime(epoch) {
 
 };
 
-export function curlGET(url, ua, proxyUrl) {
+export function wGET(url, ua) {
 	if (!url || type(url) !== 'string')
 		return null;
 
 	if (!ua)
-		ua = 'v2rayNG/2.3.2';
+		ua = 'Wget/1.21 (HomeProxy, like v2rayN)';
 
-	const maxSize = 4 * 1024 * 1024;
-	const proxyArg = proxyUrl ? `--proxy ${shellQuote(proxyUrl)} ` : '';
-
-	const outfd = popen(
-		`/usr/bin/curl -fsSL --compressed --retry 3 --retry-all-errors --retry-delay 1 ` +
-		`--connect-timeout 10 --max-time 60 ` +
-		`--max-filesize ${maxSize} ${proxyArg}-A ${shellQuote(ua)} ${shellQuote(url)} ` +
-		`2>/dev/null`
-	);
-	if (!outfd)
-		return null;
-
-	let chunks = [], total = 0, oversized = false;
-	while (true) {
-		const chunk = outfd.read(64 * 1024);
-		if (chunk === null || chunk === '')
-			break;
-		total += length(chunk);
-		if (total > maxSize) {
-			oversized = true;
-			break;
-		}
-		push(chunks, chunk);
-	}
-	const exitcode = outfd.close();
-	const output = join('', chunks);
-
-	if (exitcode !== 0 || oversized || isBinary(output))
-		return null;
-
-	return trim(output);
+	const output = executeCommand(`/usr/bin/wget -qO- --user-agent ${shellQuote(ua)} --timeout=10 ${shellQuote(url)}`) || {};
+	return trim(output.stdout);
 };
 
 export function isEmpty(res) {
