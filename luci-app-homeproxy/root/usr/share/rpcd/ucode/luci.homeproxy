@@ -125,17 +125,17 @@ const methods = {
 			let url;
 			switch(req.args?.site) {
 			case 'baidu':
-				url = 'http://connect.rom.miui.com/generate_204';
+				url = 'https://www.baidu.com';
 				break;
 			case 'google':
-				url = 'http://www.google.com/generate_204';
+				url = 'https://www.google.com';
 				break;
 			default:
 				return { result: false, error: 'illegal site' };
 				break;
 			}
 
-			return { result: (system(`/usr/bin/curl -4 -o /dev/null -s -f --connect-timeout 3 --max-time 3 ${shellQuote(url)} 2>/dev/null`, 3100) === 0) };
+			return { result: (system(`/usr/bin/wget --spider -qT3 ${url} 2>"/dev/null"`, 3100) === 0) };
 		}
 	},
 
