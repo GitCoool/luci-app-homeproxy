@@ -10,7 +10,7 @@ import { cursor } from 'uci';
 import { urldecode, urlencode } from 'luci.http';
 
 import {
-	curlGET, decodeBase64Str, getTime, isEmpty, parseURL,
+	wGET, decodeBase64Str, getTime, isEmpty, parseURL,
 	validation, HP_DIR, RUN_DIR,
 	reconcileUrltestNodes, synchronizeNodeLabels
 } from 'homeproxy';
@@ -1481,7 +1481,7 @@ function parse_uri(uri) {
 }
 
 function fetch_subscription(url, ua, groupHash) {
-	const res = curlGET(url, ua, proxy_url);
+	const res = wGET(url, ua, proxy_url);
 	if (isEmpty(res)) {
 		log(sprintf('Failed to fetch resources from %s (User-Agent: %s).', url, ua));
 		return 0;
